@@ -29,7 +29,8 @@ def get_series(id: int = None) -> tuple:
 
         series_serialized = Series.serialize_series(series)
 
-        return jsonify(series_serialized), HTTPStatus.OK
+
+        return {"data": series_serialized}, HTTPStatus.OK
     
     except NotFoundErr:
         return {"error": "Not found serie with this request's id"}, HTTPStatus.NOT_FOUND
