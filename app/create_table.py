@@ -4,8 +4,6 @@ from app.models import DatabaseConnector
 
 
 def create_table_if_not_exists():
-
-
     conn_obj = DatabaseConnector()
     conn_obj.get_conn_cur()
 

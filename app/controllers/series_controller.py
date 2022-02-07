@@ -1,8 +1,8 @@
 from xml.dom import NotFoundErr
 from flask import jsonify, request
 from http import HTTPStatus
+from app.create_table import create_table_if_not_exists
 
-from itsdangerous import json
 from app.models.series_model import Series
 
 
@@ -23,6 +23,8 @@ from app.models.series_model import Series
 
 def get_series(id: int = None) -> tuple:
     try:
+        create_table_if_not_exists()
+
         series = Series.get_serie_data(id)
         if series is None:
             raise NotFoundErr
@@ -41,12 +43,11 @@ def post_new_serie():
 
     data = request.get_json()
     try:
+        create_table_if_not_exists()
+
         serie = Series(**data)
-        print(serie)
         add_serie = serie.create_series()
-        print(add_serie)
         add_serie = Series.serialize_series(add_serie)
-        print(add_serie)
 
 
         return jsonify(add_serie), HTTPStatus.CREATED
